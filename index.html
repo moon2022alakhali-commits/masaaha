@@ -211,7 +211,8 @@
     .note-card p { font-size: 1.28rem; line-height: 1.85; margin-bottom: 15px; }
     .note-card p:last-child { margin-bottom: 0; }
     .choice-wrap { position: relative; display: inline-flex; flex-direction: column; gap: 6px; }
-    .escape-note { min-height: 23px; color: var(--rose); font-size: .91rem; font-weight: 600; }
+    .escape-note { min-height: 23px; color: var(--rose); font-size: 1.05rem; font-weight: 700; }
+    .escape-note:not(:empty) { animation: enter .5s var(--ease) both; }
     .btn.escape { position: relative; z-index: 1; }
     .btn.escape.dodged { animation: dodge .46s var(--ease) both; }
     @keyframes dodge { 50% { transform: translate(var(--dodge-x), -12px) rotate(-6deg); } to { transform: translate(var(--dodge-x), 0) rotate(-4deg); } }
@@ -564,12 +565,12 @@
     function dodge() {
       dodgeCount += 1;
       escapeButton.style.setProperty('--dodge-x', window.innerWidth < 600 ? '18px' : '-32px');
-      escapeButton.classList.add('dodged');
+      if (!reduceMotion.matches) escapeButton.classList.add('dodged');
       escapeNote.textContent = 'لا تكفين... بس بحترم قرارك ♡';
     }
     document.querySelectorAll('[data-go]').forEach((button) => {
       button.addEventListener('click', (event) => {
-        if (button === escapeButton && event.pointerType === 'touch' && dodgeCount === 0 && !reduceMotion.matches) {
+        if (button === escapeButton && dodgeCount === 0) {
           dodge();
           return;
         }
